@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <div class="content">
+            <img src="ajju.jpg" alt="Profile Image" class="profile-image">
+
+            <h2>𝑼𝑹𝑳 𝑺𝒉𝒐𝒓𝒕𝒆𝒏𝒆𝒓</h2>
+
+
+            <h3 class="glow-text">♥ʙʏ ᴀᴊᴊᴜ</h3>
+            <br>
+            <br>
+            <label for="long-url">Paste your URL here:</label>
+            <br>
+            <input type="text" id="long-url" placeholder="Enter your long URL...">
+            <div>
+                <input type="checkbox" id="custom-alias-checkbox">
+                <label for="custom-alias-checkbox">Customize link</label>
+                <input type="text" id="custom-key" placeholder="Custom short URL key (optional)" style="display:none;">
+                <br>
+                <button id="shorten-btn">Shorten URL</button>
+                <br>
+                <div id="short-url-display" class="hidden"></div>
+                <button id="copy-btn" class="hidden">Copy to Clipboard</button>
+                <br>
+
+                <button id="toggle-theme">Toggle Dark Mode</button>
+            </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+
+        document.getElementById('custom-alias-checkbox').addEventListener('change', function () {
+            document.getElementById('custom-key').style.display = this.checked ? 'block' : 'none';
+        });
+
+
+        document.getElementById('shorten-btn').addEventListener('click', function () {
+            const longUrl = document.getElementById('long-url').value.trim();
+            const customKey = document.getElementById('custom-key').value.trim();
+
+            if (!longUrl) {
+                alert("Please enter a valid URL!");
+                return;
+            }
+
+            const shortUrl = `http://localhost:3000/${customKey || Math.random().toString(36).substr(2, 6)}`;
+            document.getElementById('short-url-display').textContent = `Short URL: ${shortUrl}`;
+            document.getElementById('short-url-display').classList.remove('hidden');
+            document.getElementById('copy-btn').classList.remove('hidden');
+        });
+
+
+        document.getElementById('copy-btn').addEventListener('click', function () {
+            const shortUrlText = document.getElementById('short-url-display').textContent.replace('Short URL: ', '');
+            navigator.clipboard.writeText(shortUrlText).then(() => alert("Copied to clipboard!"));
+        });
+    </script>
+    <style>
+        footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: #000000;
+
+            text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff;
+
+        }
+    </style>
+    <footer>
+        <p>© 2024 All rights reserved by Ajim Patel</p>
+    </footer>
+</body>
+
+</html>
